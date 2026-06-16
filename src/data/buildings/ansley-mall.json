@@ -1,0 +1,110 @@
+{
+  "_meta": {
+    "note": "MOCKUP fixture for the Ansley Mall demo. Numbers are illustrative, sourced where possible. Provenance tags: google=Google Solar API study, measured=Google Earth trace, research=our default constants (FINAL.md/doc 02), gap=not yet pulled. Ranges shown where a value is sensitive (cost/rate).",
+    "generated": "2026-06-16"
+  },
+  "id": "ansley-mall",
+  "name": "Ansley Mall",
+  "owner": "Selig Enterprises (private)",
+  "address": "1544 Piedmont Ave NE, Atlanta, GA 30324",
+  "city": "atlanta",
+  "district": "Midtown / BeltLine-adjacent",
+  "location": { "lat": 33.7983, "lon": -84.3711, "provenance": "measured" },
+  "yearBuilt": 1964,
+  "stories": 1,
+  "structure": "steel bar-joist + metal deck (1964) — low load headroom",
+  "roofAreaM2": 20033,
+  "roofAreaFt2": 215634,
+  "roofHeadingDeg": 145,
+  "roofType": "light low-slope membrane (confirm SRI/age)",
+  "energyStarScore": { "value": null, "provenance": "gap", "note": "pull from CBEEO before quoting a 'before' score" },
+  "annualElectricityUseKwh": { "value": 13428838, "provenance": "google" },
+
+  "surfaces": [
+    {
+      "id": "ansley-roof",
+      "type": "roof",
+      "areaM2": 20033,
+      "usableNote": "Google obstruction-aware design used the bulk of the roof (red zones in reference imagery)",
+      "imperviousPct": 100,
+      "allowedInterventions": ["solar", "greenRoof", "coolRoof", "cistern"],
+      "addedLoadCapacityPsf": { "value": null, "provenance": "gap", "note": "needs original structural drawings; gates green roof, not PV" }
+    },
+    {
+      "id": "ansley-lot",
+      "type": "parking",
+      "areaM2": { "value": 24000, "provenance": "gap", "note": "ESTIMATE (~6 ac) — measure in Google Earth to firm up canopy + tree counts" },
+      "imperviousPct": 100,
+      "estParkingSpaces": { "value": 650, "provenance": "gap" },
+      "allowedInterventions": ["solarCanopy", "bioswale", "permeablePaving", "lotTrees", "evCharging"]
+    },
+    {
+      "id": "ansley-beltline-edge",
+      "type": "perimeter",
+      "allowedInterventions": ["shadeLattice", "pollinatorLandscaping"],
+      "note": "west edge adjoins the Atlanta BeltLine corridor"
+    }
+  ],
+
+  "interventions": {
+    "roofSolar": {
+      "label": "Rooftop solar PV",
+      "capacityKwDc": { "value": 1836, "provenance": "google" },
+      "annualKwh": { "value": 2378253, "provenance": "google" },
+      "co2TonsYr": { "value": 913, "provenance": "research", "basis": "annualKwh x 0.3837 kg/kWh eGRID SRSO" },
+      "capexUsd": { "low": 1573752, "high": 3213613, "basis": "$0.857/W (google) to $1.75/W (research) x 1.836 MW" },
+      "capexAfterItcUsd": { "low": 1101626, "high": 2249529, "basis": "less 30% ITC" }
+    },
+    "lotCanopySolar": {
+      "label": "Parking-lot solar carport canopies (OUR value-add — Google modeled 0 W on the lot)",
+      "capacityKwDc": { "value": 1400, "provenance": "research", "note": "ESTIMATE pending lot measure" },
+      "annualKwh": { "value": 1960000, "provenance": "research" },
+      "co2TonsYr": { "value": 752, "provenance": "research" },
+      "coBenefits": ["shades parked cars", "EV charging host", "stormwater routing"]
+    },
+    "greenRoof": {
+      "label": "Extensive green roof (partial — structurally gated)",
+      "appliesToFractionOfRoof": 0.6,
+      "annualGalRetained": { "value": 2400000, "provenance": "research", "basis": "129k ft2 x 50 in/yr x 60% retention" },
+      "firstInchStormGal": { "value": 52000, "provenance": "research" },
+      "note": "competes with rooftop PV for the same roof — split or biosolar a portion"
+    },
+    "coolRoof": { "label": "Cool roof", "note": "baseline re-roof obligation that green/solar area EXEMPTS — the killer hook" }
+  },
+
+  "buildingTotals": {
+    "combinedSolarKwDc": 3236,
+    "combinedAnnualKwh": 4338253,
+    "pctOfBuildingLoadOffset": { "value": 32, "basis": "4.34 GWh generated / 13.43 GWh used; all self-consumed (no export haircut)" },
+    "combinedCo2TonsYr": 1665,
+    "annualEnergySavingsUsd": { "low": 498900, "high": 811253, "basis": "combined kWh x $0.115 (research) to $0.187 (google) /kWh" },
+    "stormwaterGalYr": 2400000,
+    "paybackYearsRange": { "low": 2.5, "high": 8.0, "note": "highly sensitive to $/W and $/kWh — present as a band, not a point" }
+  },
+
+  "incentives": [
+    { "key": "itc", "label": "Federal Investment Tax Credit", "value": "30% of system cost", "window": "2023–2033", "provenance": "google" },
+    { "key": "ptc", "label": "Production Tax Credit (alternative to ITC)", "value": "$0.0275/kWh, 10 yr", "provenance": "google" },
+    { "key": "nem", "label": "Net Metering", "value": "$0.0288/kWh, capped 125% of annual use", "provenance": "google" },
+    { "key": "179d", "label": "§179D energy-efficiency deduction", "provenance": "research" },
+    { "key": "gaPowerRebate", "label": "Georgia Power commercial EE rebate", "value": "$100K–350K/bldg/yr", "provenance": "research" },
+    { "key": "coolRoofExemption", "label": "Cool-roof re-roof exemption (avoided compliance cost)", "provenance": "research" }
+  ],
+
+  "codes": [
+    { "key": "coolRoof", "ref": "Cool Roof Ordinance 25-O-1310", "role": "gate→carrot", "note": "re-roof triggers cool roof; green/solar area exempt" },
+    { "key": "stormwater", "ref": "Ch. 74 Art. X (first 1.0\" on-site)", "role": "gate+carrot" },
+    { "key": "tree", "ref": "Tree Protection Ch. 158 §158-30", "role": "gate", "note": "parking 30+ spaces -> 1 tree/8 spaces (~80 lot trees)" },
+    { "key": "structural", "ref": "2024 IBC + GA amendments", "role": "gate", "note": "green-roof load gate; PV clears (~3-5 psf)" },
+    { "key": "interconnection", "ref": "Georgia Power interconnection", "role": "constraint", "note": "export ~6-7c < retail; load >> generation so all solar self-consumed" }
+  ],
+
+  "cityContribution": {
+    "framingForMayorsOffice": "Side-B: contribution to City of Atlanta climate goals",
+    "co2TowardTarget": "~1,665 t CO2/yr toward the 59%-by-2030 / net-zero-2050 goal",
+    "cleanEnergy": "~4.34 GWh/yr on-site solar toward 100% clean energy by 2035",
+    "stormwater": "~2.4M gal/yr retained toward the citywide GI target",
+    "beltline": "BeltLine-adjacent heat-island + green-corridor contribution",
+    "plan": "aligns with Climate Resilient ATL (first Climate Resilience Action Plan, 2026)"
+  }
+}
