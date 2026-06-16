@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/EngineResult.schema.json",
+  "title": "EngineResult",
+  "description": "Full output of runEngine for one building. HANDSHAKE §3.6.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["buildingId", "engineVersion", "schemaVersion", "surfaceScores", "ranked", "buildingTotals"],
+  "$defs": {
+    "BuildingTotals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "combinedSolarKwDc": { "type": "number" },
+        "combinedAnnualKwh": { "type": "number" },
+        "combinedCo2TonsYr": { "type": "number" },
+        "stormwaterGalYr": { "type": "number" },
+        "pctOfBuildingLoadOffset": { "type": "number", "minimum": 0, "maximum": 100 },
+        "annualEnergySavingsUsd": { "$ref": "_defs.schema.json#/$defs/Range" },
+        "paybackYearsRange": { "$ref": "_defs.schema.json#/$defs/Range" }
+      }
+    }
+  },
+  "properties": {
+    "buildingId": { "type": "string" },
+    "engineVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "surfaceScores": { "type": "array", "items": { "$ref": "Score.schema.json" } },
+    "ranked": { "type": "array", "items": { "$ref": "Score.schema.json" } },
+    "buildingTotals": { "$ref": "#/$defs/BuildingTotals" },
+    "timeDependent": {
+      "description": "Sun-slider live values (Doc 01 §4); shape intentionally open."
+    }
+  }
+}

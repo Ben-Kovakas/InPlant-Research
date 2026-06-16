@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/_defs.schema.json",
+  "title": "Shared core type definitions",
+  "description": "Reusable $defs for the In-Planted handshake. Referenced by the payload schemas via $ref. Mirrors HANDSHAKE.md §3.1-3.4 and contracts/types/domain.ts. camelCase on the wire.",
+  "$defs": {
+    "ProvenanceTier": {
+      "type": "string",
+      "enum": ["measured", "fetched", "modeled", "default", "gap"]
+    },
+    "Provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier", "source"],
+      "properties": {
+        "tier": { "$ref": "#/$defs/ProvenanceTier" },
+        "source": { "type": "string" },
+        "method": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "note": { "type": "string" }
+      }
+    },
+    "ProvenancedValue": {
+      "description": "A value plus provenance. value is null only when provenance.tier = 'gap'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "provenance"],
+      "properties": {
+        "value": { "type": ["number", "string", "boolean", "null"] },
+        "provenance": { "$ref": "#/$defs/Provenance" },
+        "basis": { "type": "string" }
+      }
+    },
+    "Range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["low", "high"],
+      "properties": {
+        "low": { "type": "number" },
+        "high": { "type": "number" },
+        "basis": { "type": "string" }
+      }
+    },
+    "GeoPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lat", "lon"],
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 }
+      }
+    },
+    "Orientation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["azimuthDeg", "tiltDeg"],
+      "properties": {
+        "azimuthDeg": { "type": "number", "minimum": 0, "maximum": 360 },
+        "tiltDeg": { "type": "number", "minimum": 0, "maximum": 90 }
+      }
+    },
+    "SurfaceType": {
+      "type": "string",
+      "enum": ["roof", "facade", "parking", "perimeter"]
+    },
+    "InterventionKey": {
+      "type": "string",
+      "enum": [
+        "solar",
+        "solarCanopy",
+        "greenRoof",
+        "coolRoof",
+        "cistern",
+        "bioswale",
+        "permeablePaving",
+        "lotTrees",
+        "shadeLattice",
+        "pollinatorLandscaping",
+        "agriculture",
+        "evCharging"
+      ]
+    },
+    "Objective": {
+      "type": "string",
+      "enum": ["solar", "stormwater", "heat", "carbon", "energy", "biodiversity"]
+    }
+  }
+}

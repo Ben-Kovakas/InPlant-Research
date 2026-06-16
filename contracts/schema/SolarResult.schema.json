@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/SolarResult.schema.json",
+  "title": "SolarResult",
+  "description": "Canonical solar payload the PySAM worker MUST emit. HANDSHAKE §3.7.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "surfaceId",
+    "systemCapacityKwDc",
+    "acAnnualKwh",
+    "acMonthlyKwh",
+    "capacityFactor",
+    "co2AvoidedTonsYr",
+    "assumptions"
+  ],
+  "properties": {
+    "surfaceId": { "type": "string" },
+    "systemCapacityKwDc": { "type": "number", "minimum": 0 },
+    "acAnnualKwh": { "type": "number", "minimum": 0 },
+    "acMonthlyKwh": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 12,
+      "maxItems": 12
+    },
+    "capacityFactor": { "type": "number", "minimum": 0, "maximum": 1 },
+    "co2AvoidedTonsYr": { "type": "number", "minimum": 0 },
+    "assumptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tiltDeg", "azimuthDeg", "lossesPct", "arrayType", "moduleType", "gridFactorKgPerKwh"],
+      "properties": {
+        "tiltDeg": { "type": "number" },
+        "azimuthDeg": { "type": "number" },
+        "lossesPct": { "type": "number" },
+        "arrayType": { "type": "integer" },
+        "moduleType": { "type": "integer" },
+        "gridFactorKgPerKwh": { "type": "number" }
+      }
+    }
+  }
+}

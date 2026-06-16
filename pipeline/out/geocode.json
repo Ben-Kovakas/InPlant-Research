@@ -1,0 +1,27 @@
+{
+  "worker": "geocode",
+  "workerVersion": "1.0.0",
+  "schemaVersion": "0.1.0",
+  "inputHash": "sha256:69de13ff9742481864cbb28e1b96d76d2ce77a8606c2362a662d36e40eac5738",
+  "result": {
+    "inputAddress": "1544 Piedmont Ave NE, Atlanta, GA 30324",
+    "formattedAddress": "1544 Piedmont Ave NE, Atlanta, GA 30324",
+    "location": {
+      "lat": 33.7983,
+      "lon": -84.3711
+    },
+    "placeId": null,
+    "locationType": null
+  },
+  "provenance": {
+    "tier": "default",
+    "source": "Ansley fixture fallback",
+    "method": "ansley-mall.json location",
+    "date": "2026-06-16T19:38:27Z"
+  },
+  "warnings": [
+    "GOOGLE_MAPS_API_KEY not set; skipped live Geocoding call.",
+    "Fell back to Ansley fixture coordinates (default)."
+  ],
+  "computedAt": "2026-06-16T19:38:27Z"
+}

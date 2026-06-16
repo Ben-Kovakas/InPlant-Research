@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/Score.schema.json",
+  "title": "Score",
+  "description": "The engine's per-(surface × intervention) score. HANDSHAKE §3.6.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["surfaceId", "intervention", "metrics", "normalized", "composite"],
+  "$defs": {
+    "NumberOrRange": {
+      "oneOf": [
+        { "type": "number" },
+        { "$ref": "_defs.schema.json#/$defs/Range" }
+      ]
+    },
+    "MetricBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "solarKwhYr": { "type": "number" },
+        "stormwaterGalYr": { "type": "number" },
+        "heatDeltaF": { "type": "number" },
+        "energyKwhYr": { "type": "number" },
+        "energyUsdYr": { "type": "number" },
+        "carbonTonsYr": { "type": "number" },
+        "biodiversityM2": { "type": "number" },
+        "capexUsd": { "$ref": "#/$defs/NumberOrRange" },
+        "incentivesUsd": { "type": "number" },
+        "paybackYears": { "$ref": "#/$defs/NumberOrRange" }
+      }
+    }
+  },
+  "properties": {
+    "surfaceId": { "type": "string" },
+    "intervention": { "$ref": "_defs.schema.json#/$defs/InterventionKey" },
+    "metrics": { "$ref": "#/$defs/MetricBundle" },
+    "normalized": {
+      "type": "object",
+      "description": "0–1 per sub-metric.",
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+    },
+    "composite": { "type": "number", "minimum": 0, "maximum": 1 },
+    "feasibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["permitable", "notes"],
+      "properties": {
+        "permitable": { "type": "boolean" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

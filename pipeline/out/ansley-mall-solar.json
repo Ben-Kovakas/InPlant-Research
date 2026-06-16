@@ -1,0 +1,49 @@
+{
+  "worker": "solar_pysam",
+  "workerVersion": "1.0.0",
+  "schemaVersion": "0.1.0",
+  "inputHash": "sha256:82c2ee87183396aca9381444e9a8b681f42a3da4114262227a822f405307c995",
+  "result": {
+    "surfaceId": "ansley-roof",
+    "systemCapacityKwDc": 1836.0,
+    "acAnnualKwh": 2386800.0,
+    "acMonthlyKwh": [
+      167076.0,
+      181396.8,
+      214812.0,
+      229132.8,
+      233906.4,
+      226746.0,
+      221972.4,
+      219585.6,
+      205264.8,
+      195717.6,
+      162302.4,
+      128887.2
+    ],
+    "capacityFactor": 0.1484,
+    "co2AvoidedTonsYr": 915.82,
+    "assumptions": {
+      "tiltDeg": 10,
+      "azimuthDeg": 180,
+      "lossesPct": 14,
+      "arrayType": 1,
+      "moduleType": 1,
+      "gridFactorKgPerKwh": 0.3837
+    }
+  },
+  "provenance": {
+    "tier": "modeled",
+    "source": "Closed-form PVWatts-style estimate",
+    "method": "specific-yield constant 1300 kWh/kWp/yr (Atlanta, GA; NREL PVWatts v8 / NSRDB TMY regional, ~14% losses)",
+    "date": "2026-06-16T18:39:49Z",
+    "note": "Grid factor 0.3837 kg CO2/kWh (EPA eGRID2023 Rev 2, SRSO). Capacity from --capacity-kw override."
+  },
+  "warnings": [
+    "PySAM (PySAM.Pvwattsv8) not importable in this environment.",
+    "NREL_API_KEY is set but NREL_API_BASE is not \u2014 live HTTP skipped. For safety the key is NOT sent to any default domain; set NREL_API_BASE to an endpoint you have verified as official NREL to enable it.",
+    "PySAM not installed and no live NREL PVWatts call available; used a closed-form Atlanta specific-yield estimate (Tier 0).",
+    "systemCapacityKwDc overridden via --capacity-kw (1836.0 kW DC)."
+  ],
+  "computedAt": "2026-06-16T18:39:49Z"
+}

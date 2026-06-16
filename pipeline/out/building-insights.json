@@ -1,0 +1,58 @@
+{
+  "worker": "solar_buildinginsights",
+  "workerVersion": "1.0.0",
+  "schemaVersion": "0.1.0",
+  "inputHash": "sha256:3e3cb9fb7a62d119ca9044333d0043d171e5730037d17cc61d48f7f260bef764",
+  "result": {
+    "center": {
+      "lat": 33.7983,
+      "lon": -84.3711
+    },
+    "wholeRoofAreaM2": 20033.0,
+    "maxArrayAreaM2": null,
+    "maxArrayPanelsCount": null,
+    "roofSegments": [
+      {
+        "areaM2": 20033.0,
+        "pitchDeg": 0,
+        "azimuthDeg": 145
+      }
+    ],
+    "candidateSurfaces": [
+      {
+        "id": "ansley-mall-roof",
+        "type": "roof",
+        "areaM2": {
+          "value": 20033.0,
+          "provenance": {
+            "tier": "default",
+            "source": "Ansley fixture fallback"
+          }
+        },
+        "imperviousPct": 100,
+        "allowedInterventions": [
+          "solar",
+          "greenRoof",
+          "coolRoof",
+          "cistern"
+        ],
+        "orientation": {
+          "azimuthDeg": 180.0,
+          "tiltDeg": 10.0
+        }
+      }
+    ],
+    "imageryQuality": null
+  },
+  "provenance": {
+    "tier": "default",
+    "source": "Ansley fixture fallback",
+    "method": "ansley-mall.json roofAreaM2",
+    "date": "2026-06-16T19:38:27Z"
+  },
+  "warnings": [
+    "GOOGLE_MAPS_API_KEY not set; skipped live Solar API call.",
+    "Fell back to Ansley fixture roof geometry (default)."
+  ],
+  "computedAt": "2026-06-16T19:38:27Z"
+}

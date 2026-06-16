@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/report.schema.json",
+  "title": "MasterReport",
+  "description": "The city-ready proposal object. Built from EngineResult (HANDSHAKE §3.6) + codes/incentives/city-contribution content blocks. camelCase + ProvenancedValue per HANDSHAKE §1. See contracts/04_report-schema.md.",
+  "type": "object",
+  "required": ["reportId", "generatedAt", "engineVersion", "schemaVersion", "buildingId", "snapshot", "package", "impact", "cost", "feasibility", "nextSteps"],
+  "$defs": {
+    "Provenance": {
+      "type": "object",
+      "required": ["tier", "source"],
+      "properties": {
+        "tier": { "enum": ["measured", "fetched", "modeled", "default", "gap"] },
+        "source": { "type": "string" },
+        "method": { "type": "string" },
+        "date": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "ProvenancedValue": {
+      "type": "object",
+      "required": ["value", "provenance"],
+      "properties": {
+        "value": { "type": ["number", "null"] },
+        "provenance": { "$ref": "#/$defs/Provenance" },
+        "basis": { "type": "string" }
+      }
+    },
+    "ProvenancedRange": {
+      "type": "object",
+      "required": ["value", "provenance"],
+      "properties": {
+        "value": {
+          "type": ["object", "null"],
+          "required": ["low", "high"],
+          "properties": {
+            "low": { "type": "number" },
+            "high": { "type": "number" },
+            "basis": { "type": "string" }
+          }
+        },
+        "provenance": { "$ref": "#/$defs/Provenance" },
+        "basis": { "type": "string" }
+      }
+    },
+    "CredibilityBasis": {
+      "description": "Honesty layer (Doc 03 §5). Distinct from provenance.tier: tier = where it came from; basis = how to read the claim in a report.",
+      "enum": ["measured", "modeled", "illustrative", "literature"]
+    },
+    "FieldCredibility": {
+      "type": "object",
+      "properties": {
+        "basis": { "$ref": "#/$defs/CredibilityBasis" },
+        "verify": { "type": "boolean" },
+        "citation": { "type": "string" }
+      }
+    }
+  },
+  "properties": {
+    "reportId": { "type": "string" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "engineVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "audience": { "enum": ["owner", "city"], "default": "owner" },
+    "buildingId": { "type": "string", "description": "kebab slug, HANDSHAKE §1" },
+
+    "dataProvenance": {
+      "type": "object",
+      "description": "Per-field credibility map (Doc 03 §5). Keys are dotted field paths into this report, e.g. 'impact.solarKwhYr'.",
+      "additionalProperties": { "$ref": "#/$defs/FieldCredibility" }
+    },
+
+    "snapshot": {
+      "type": "object",
+      "description": "Section 1 — Building Snapshot + Current Rating (Doc 03 §2 S1).",
+      "required": ["address"],
+      "properties": {
+        "parcelId": { "type": "string" },
+        "address": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": { "lat": { "type": "number" }, "lon": { "type": "number" } }
+        },
+        "grossFloorAreaFt2": { "$ref": "#/$defs/ProvenancedValue" },
+        "roofAreaFt2": { "$ref": "#/$defs/ProvenancedValue" },
+        "usableRoofAreaFt2": { "$ref": "#/$defs/ProvenancedValue" },
+        "stories": { "type": "integer" },
+        "yearBuilt": { "type": "integer" },
+        "historicDistrict": { "type": ["string", "null"] },
+        "energyStarScore": { "$ref": "#/$defs/ProvenancedValue" },
+        "euiKbtuFt2": { "$ref": "#/$defs/ProvenancedValue" },
+        "coolRoofStatus": { "enum": ["compliant", "reroofObligationPending", "exempt", "unknown"] },
+        "currentRating": { "$ref": "#/$defs/ProvenancedValue" }
+      }
+    },
+
+    "package": {
+      "type": "object",
+      "description": "Section 2 — Recommended Package on the 3D twin (Doc 03 §2 S2). Derived from EngineResult.ranked.",
+      "required": ["packageId", "name", "interventions"],
+      "properties": {
+        "packageId": { "type": "string" },
+        "name": { "type": "string" },
+        "recommended": { "type": "boolean" },
+        "twinState": {
+          "type": "object",
+          "properties": {
+            "sunTime": { "type": "string" },
+            "layers": { "type": "array", "items": { "type": "string" } },
+            "camera": { "type": "array", "items": { "type": "number" } }
+          }
+        },
+        "interventions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "surfaceId"],
+            "properties": {
+              "key": { "type": "string", "description": "InterventionKey, HANDSHAKE §3.4" },
+              "label": { "type": "string" },
+              "surfaceId": { "type": "string" },
+              "areaFt2": { "$ref": "#/$defs/ProvenancedValue" },
+              "capacityKwDc": { "$ref": "#/$defs/ProvenancedValue" },
+              "placementNote": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "impact": {
+      "type": "object",
+      "description": "Section 3 — Impact Deltas (Doc 03 §2 S3). Mirrors BuildingTotals + MetricBundle (HANDSHAKE §3.6).",
+      "properties": {
+        "stormwaterGalPerStorm": { "$ref": "#/$defs/ProvenancedValue" },
+        "stormwaterGalYr": { "$ref": "#/$defs/ProvenancedValue" },
+        "firstInchCompliance": { "type": ["boolean", "null"] },
+        "solarKwhYr": { "$ref": "#/$defs/ProvenancedValue" },
+        "systemKwDc": { "$ref": "#/$defs/ProvenancedValue" },
+        "energyKwhSavedYr": { "$ref": "#/$defs/ProvenancedValue" },
+        "co2TonsYr": { "$ref": "#/$defs/ProvenancedValue" },
+        "pctOfBuildingLoadOffset": { "$ref": "#/$defs/ProvenancedValue" },
+        "roofTempDropF": { "$ref": "#/$defs/ProvenancedValue" },
+        "habitatM2Added": { "$ref": "#/$defs/ProvenancedValue" }
+      }
+    },
+
+    "cost": {
+      "type": "object",
+      "description": "Section 4 — Cost & ROI incl. stacked incentives (Doc 03 §2 S4).",
+      "required": ["capexUsd", "incentiveStack", "paybackYears"],
+      "properties": {
+        "capexUsd": { "$ref": "#/$defs/ProvenancedRange" },
+        "capexByIntervention": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "unitCostUsd": { "type": "number" },
+              "unit": { "type": "string" },
+              "subtotalUsd": { "$ref": "#/$defs/ProvenancedRange" }
+            }
+          }
+        },
+        "annualSavingsUsd": {
+          "type": "object",
+          "properties": {
+            "energyUsd": { "$ref": "#/$defs/ProvenancedRange" },
+            "avoidedStormwaterFeeUsd": { "$ref": "#/$defs/ProvenancedValue" },
+            "avoidedTreeRecompenseUsd": { "$ref": "#/$defs/ProvenancedValue" },
+            "totalUsd": { "$ref": "#/$defs/ProvenancedRange" }
+          }
+        },
+        "incentiveStack": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "label", "level"],
+            "properties": {
+              "key": { "type": "string" },
+              "label": { "type": "string" },
+              "level": { "enum": ["federal", "state", "utility", "city"] },
+              "kind": { "enum": ["credit", "deduction", "rebate", "avoidedCost"] },
+              "estValueUsd": { "$ref": "#/$defs/ProvenancedRange" },
+              "requires": { "type": "string" },
+              "form": { "type": ["string", "null"] },
+              "deadline": { "type": ["string", "null"] },
+              "citation": { "type": "string" },
+              "verify": { "type": "boolean" }
+            }
+          }
+        },
+        "incentiveTotalUsd": { "$ref": "#/$defs/ProvenancedRange" },
+        "netCapexUsd": { "$ref": "#/$defs/ProvenancedRange" },
+        "paybackYears": { "$ref": "#/$defs/ProvenancedRange" }
+      }
+    },
+
+    "feasibility": {
+      "type": "object",
+      "description": "Section 5 — Feasibility + Codes (Doc 03 §2 S5).",
+      "properties": {
+        "permitabilityConfidence": { "enum": ["lowRisk", "mediumRisk", "highRisk"] },
+        "structuralGateStatus": { "type": "string" },
+        "codesSatisfied": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "citation", "status"],
+            "properties": {
+              "code": { "type": "string" },
+              "citation": { "type": "string" },
+              "role": { "enum": ["gate", "carrot", "gateCarrot", "constraint"] },
+              "howComplied": { "type": "string" },
+              "reviewer": { "type": "string" },
+              "status": { "enum": ["met", "pending", "needsReview"] }
+            }
+          }
+        },
+        "codesPreempted": { "type": "array", "items": { "type": "string" } },
+        "openFlags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "nextSteps": {
+      "type": "object",
+      "description": "Section 6 — Next-Step Checklist (Doc 03 §2 S6).",
+      "properties": {
+        "rfpScopeLines": { "type": "array", "items": { "type": "string" } },
+        "incentiveApplications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "incentive": { "type": "string" },
+              "form": { "type": ["string", "null"] },
+              "prerequisiteArtifact": { "type": "string" },
+              "deadline": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "agencyHandoffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "phase": { "type": "integer" },
+              "briefId": { "type": "string" },
+              "agency": { "type": "string" },
+              "hiredTeam": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "generatedBriefs": {
+      "type": "array",
+      "description": "Fan-out artifacts A1-A6 + B1 (Doc 03 §1). Each is a derived VendorBrief view of this report.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "briefId": { "enum": ["A1Structural", "A2Stormwater", "A3Tree", "A4Historic", "A5Matrix", "A6Zoning", "B1City"] },
+          "template": { "type": "string" },
+          "recipient": { "type": "string" },
+          "agency": { "type": "string" },
+          "conditional": { "type": "boolean" },
+          "exportUrl": { "type": "string" }
+        }
+      }
+    },
+
+    "registryFields": {
+      "type": "object",
+      "description": "Open extension point. Promoted Report Content Registry fields (status DRAFT|STABLE) land here until they earn a named slot above. Keys are field names per HANDSHAKE §1; values are ProvenancedValue. See 04 §2.",
+      "additionalProperties": true
+    }
+  }
+}

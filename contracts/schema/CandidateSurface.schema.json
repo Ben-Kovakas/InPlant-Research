@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/CandidateSurface.schema.json",
+  "title": "CandidateSurface",
+  "description": "A surface of a building the engine can place interventions on. HANDSHAKE §3.3.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "type", "areaM2", "allowedInterventions"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "`${buildingId}-${type}`, e.g. ansley-mall-roof."
+    },
+    "type": { "$ref": "_defs.schema.json#/$defs/SurfaceType" },
+    "areaM2": { "$ref": "_defs.schema.json#/$defs/ProvenancedValue" },
+    "usableAreaM2": { "$ref": "_defs.schema.json#/$defs/ProvenancedValue" },
+    "orientation": { "$ref": "_defs.schema.json#/$defs/Orientation" },
+    "imperviousPct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "sunExposure": { "type": "number", "minimum": 0, "maximum": 1 },
+    "addedLoadCapacityPsf": { "$ref": "_defs.schema.json#/$defs/ProvenancedValue" },
+    "allowedInterventions": {
+      "type": "array",
+      "items": { "$ref": "_defs.schema.json#/$defs/InterventionKey" }
+    },
+    "sceneAnchor": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 3,
+      "maxItems": 3
+    }
+  }
+}

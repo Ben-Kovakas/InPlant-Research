@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/WorkerResult.schema.json",
+  "title": "WorkerResult",
+  "description": "Standard envelope every Python calc worker returns. HANDSHAKE §3.7. The `result` shape is worker-specific; e.g. the solar worker's result validates against SolarResult.schema.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["worker", "workerVersion", "inputHash", "result", "provenance", "computedAt"],
+  "properties": {
+    "worker": { "type": "string", "description": "e.g. solar_pysam." },
+    "workerVersion": { "type": "string" },
+    "inputHash": { "type": "string", "description": "Content hash of inputs, for caching." },
+    "result": {
+      "description": "Worker-specific payload. Validate separately against the worker's result schema (e.g. SolarResult)."
+    },
+    "provenance": { "$ref": "_defs.schema.json#/$defs/Provenance" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "computedAt": { "type": "string", "format": "date-time" }
+  }
+}

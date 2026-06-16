@@ -54,23 +54,25 @@ npm run dev
 
 ```
 visualDemo/
-├── src/
-│   ├── App.jsx          # The main demo component (the JSX you'll be looking at)
-│   └── main.jsx         # React entry point
-├── index.html           # Vite HTML shell
-├── vite.config.js       # Vite + React config (dev server on port 5173)
-├── package.json         # Dependencies + scripts
-├── package-lock.json    # Locks exact versions for reproducible installs
-├── projectSummary.md    # Project overview / write-up
-└── ArchitectureCodeResearchAgents/
-    ├── CaseStudy2.MD
-    ├── Integration3.MD
-    └── MetricValueAnalyst1.MD
+├── src/                         # React + Three.js app
+│   ├── AnsleyApp.jsx            # Current demo: Ansley Mall architectural twin
+│   ├── App.jsx                  # Older Lot 0427 demo (preserved)
+│   ├── main.jsx                 # React entry point
+│   └── data/buildings/          # Building fixtures (e.g. ansley-mall.json)
+├── ImplementationPlan/          # ★ Authoritative planning base (start at 00_README.md)
+├── contracts/                   # Domain types, engine/API contracts, JSON schemas
+├── pipeline/                    # Python offline data pipeline (geocode, solar) → JSON
+├── spec-driven/                 # Backend architecture spec
+├── ArchitectureCodeResearchAgents/  # ExecutiveSummary.md (research synthesis)
+├── archive/                     # Superseded legacy research (grep can skip)
+├── index.html                   # Vite HTML shell
+├── vite.config.js               # Vite + React config (dev server on port 5173)
+├── package.json                 # Dependencies + scripts
+└── package-lock.json            # Locks exact versions for reproducible installs
 ```
 
-> Note: there's a duplicate copy of the component at the repo root
-> (`green-retrofit-demo (1).jsx`). The version the app actually runs is
-> `src/App.jsx` — edit that one.
+> **The current demo component is `src/AnsleyApp.jsx`** (Ansley Mall). The older
+> Lot 0427 demo lives in `src/App.jsx`.
 
 ---
 

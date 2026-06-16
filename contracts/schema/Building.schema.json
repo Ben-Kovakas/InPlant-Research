@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://in-planted.dev/contracts/schema/Building.schema.json",
+  "title": "Building",
+  "description": "A building and its candidate surfaces — the primary input to the engine. HANDSHAKE §3.5.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "city", "location", "surfaces", "schemaVersion"],
+  "properties": {
+    "id": { "type": "string", "description": "Kebab slug, e.g. ansley-mall." },
+    "name": { "type": "string" },
+    "owner": { "type": "string" },
+    "address": { "type": "string" },
+    "city": { "type": "string", "description": "Selects climate/incentives config." },
+    "location": {
+      "description": "WGS84 point with optional provenance.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lat", "lon"],
+      "properties": {
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+        "provenance": { "$ref": "_defs.schema.json#/$defs/Provenance" }
+      }
+    },
+    "yearBuilt": { "type": "integer" },
+    "stories": { "type": "integer", "minimum": 0 },
+    "roofAreaM2": { "type": "number", "minimum": 0 },
+    "energyStarScore": { "$ref": "_defs.schema.json#/$defs/ProvenancedValue" },
+    "annualElectricityUseKwh": { "$ref": "_defs.schema.json#/$defs/ProvenancedValue" },
+    "surfaces": {
+      "type": "array",
+      "items": { "$ref": "CandidateSurface.schema.json" }
+    },
+    "schemaVersion": { "type": "string" }
+  }
+}

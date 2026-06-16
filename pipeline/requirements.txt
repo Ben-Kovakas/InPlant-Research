@@ -1,0 +1,12 @@
+# In-Planted solar worker dependencies.
+#
+# The worker runs WITHOUT these installed (it falls back to a closed-form
+# Atlanta specific-yield estimate, and optionally a live PVWatts HTTP call via
+# Python stdlib urllib). Install these to enable the Tier-1 PySAM path.
+
+# Tier 1 — NREL SAM / PySAM (the bankable solar model). Module: PySAM.Pvwattsv8.
+nrel-pysam>=5.0
+
+# Tier 0 (a) — optional, nicer HTTP client for the live PVWatts fallback.
+# (The worker itself uses stdlib urllib, so requests is optional/convenience.)
+requests>=2.31

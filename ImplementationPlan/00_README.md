@@ -23,8 +23,11 @@
 | 11 | [Ansley — Codes](11_Ansley_Codes.md) | Proposal pillar 1: Atlanta codes the retrofit follows (gate/carrot) | Pitch |
 | 12 | [Ansley — Tax Benefits](12_Ansley_TaxBenefits.md) | Proposal pillar 2: incentive stack + payback band (OBBBA-updated) | Pitch |
 | 13 | [Ansley — City Contribution](13_Ansley_CityContribution.md) | Proposal pillar 3: Side-B Mayor's-Office goal contribution | Pitch |
+| 14 | [Automated Onboarding](14_AutomatedOnboarding.md) | Streamlining "address → grabbable data" via GEE + Google Maps Platform APIs | Data |
 
 > **Interactive mockup:** `src/AnsleyApp.jsx` (run `npm run dev`) — monochrome architectural twin of Ansley Mall with sun-path, layer toggles, live readouts, and a "City-Ready Proposal" panel. Data from `src/data/buildings/ansley-mall.json`. The old Lot 0427 demo is preserved in `src/App.jsx`.
+
+> **Production architecture ("architect-for-later"):** [`architecture/`](architecture/00_Overview.md) — if the model is to become *real* (actual calculations, any-city scale): [00 Overview + Dev Kickoff](architecture/00_Overview.md) · [01 Data/Geospatial](architecture/01_DataGeospatial.md) · [02 Calculation Engine](architecture/02_CalculationEngine.md) · [03 Platform/Serving](architecture/03_PlatformServing.md) · [04 AI Opportunity](architecture/04_AIOpportunity.md).
 
 > **Backend technology spec:** [`spec-driven/backend-architecture/spec.md`](../spec-driven/backend-architecture/spec.md) — Python offline pipeline → committed JSON → shared JS engine → print-PDF; demo-now/architect-for-later.
 
