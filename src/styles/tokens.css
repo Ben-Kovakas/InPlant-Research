@@ -1,0 +1,96 @@
+/* ----------------------------------------------------------------------------
+   Design tokens — extracted from the Ansley 3D twin palette so every view
+   (login, owner, city, dossier) shares one look: charcoal ground, off-white
+   matte, one restrained warm amber accent.
+---------------------------------------------------------------------------- */
+
+:root {
+  --ink: #0b0c0e;
+  --ink2: #14161a;
+  --ink3: #16181c;
+  --panel: rgba(20, 22, 26, 0.62);
+  --panel-solid: rgba(17, 19, 23, 0.94);
+  --card: rgba(255, 255, 255, 0.02);
+  --stroke: rgba(255, 255, 255, 0.09);
+  --stroke-strong: rgba(255, 255, 255, 0.16);
+  --text: #eef0f3;
+  --muted: #9aa0aa;
+  --faint: #5c626c;
+  --accent: #f4c47a;
+  --accent-dim: rgba(244, 196, 122, 0.14);
+  --accent-line: rgba(244, 196, 122, 0.4);
+  --good: #8fbf8a;
+  --warn: #e7b08a;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* shared primitives reused by the React views */
+.ip-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+.ip-mono {
+  font-family: var(--font-mono);
+}
+.ip-card {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+.ip-btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--stroke-strong);
+  border-radius: 11px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ip-btn:hover {
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+.ip-btn-primary {
+  background: var(--accent);
+  color: #14161a;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.ip-btn-primary:hover {
+  filter: brightness(1.06);
+  color: #14161a;
+}
