@@ -6,6 +6,7 @@
 
 import React from "react";
 import { fmtInt } from "../../lib/format.js";
+import CollapsiblePanel from "./CollapsiblePanel.jsx";
 
 // PDF baseline constants (also in engine CONSTANTS, restated here for the "before").
 const ENERGY_STAR = 63;
@@ -17,12 +18,12 @@ export default function BaselineCard({ building }) {
   const cbeeoApplies = roofFt2 >= 25000;
 
   return (
-    <section className="ow-panel ow-baseline" aria-label="Building baseline">
-      <p className="ow-h">
-        Baseline · the “before”
-        <span className="tag">ENERGY STAR</span>
-      </p>
-
+    <CollapsiblePanel
+      className="ow-baseline"
+      ariaLabel="Building baseline"
+      title={"Baseline · the “before”"}
+      tag="ENERGY STAR"
+    >
       <div className="ow-score">
         <span className="big">{ENERGY_STAR}</span>
         <span className="of">/ 100 score</span>
@@ -73,6 +74,6 @@ export default function BaselineCard({ building }) {
           <>Below the 25,000 ft² CBEEO threshold.</>
         )}
       </p>
-    </section>
+    </CollapsiblePanel>
   );
 }

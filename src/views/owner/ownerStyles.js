@@ -44,8 +44,28 @@ export const OWNER_CSS = `
   .ow-h .tag{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.12em;
     padding:2px 7px;border-radius:5px;border:1px solid var(--stroke-strong);color:var(--muted);}
 
-  /* ---- baseline card (top-left, under brand) ---- */
-  .ow-baseline{position:absolute;top:74px;left:22px;width:260px;padding:15px 16px;z-index:20;}
+  /* ---- collapsible panel header / body ---- */
+  /* the column wrappers hold two stacked panels each; they FLOW (never overlap),
+     and each panel collapses to header-only so the others can be read independently. */
+  .ow-col{position:absolute;top:74px;display:flex;flex-direction:column;gap:12px;
+    z-index:20;pointer-events:none;}
+  .ow-col > *{pointer-events:auto;}
+  .ow-col-left{left:22px;width:276px;bottom:118px;}
+  .ow-col-right{right:22px;width:308px;bottom:22px;}
+
+  .ow-h.ow-toggle{width:100%;background:none;border:none;cursor:pointer;color:var(--muted);
+    font:inherit;text-transform:uppercase;letter-spacing:.2em;font-size:9.5px;font-weight:500;
+    -webkit-appearance:none;appearance:none;}
+  .ow-h.ow-toggle:hover{color:var(--text);}
+  .ow-h .ow-hr{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+  .ow-h .chev{display:grid;place-items:center;color:var(--muted);transition:transform .2s;}
+  .ow-panel.collapsed .ow-h{margin-bottom:0;}
+  .ow-panel.collapsed .chev{transform:rotate(-90deg);}
+  .ow-cbody{min-height:0;overflow:auto;}
+  .ow-panel.collapsed .ow-cbody{display:none;}
+
+  /* ---- baseline card (top of left column) ---- */
+  .ow-baseline{padding:15px 16px;display:flex;flex-direction:column;min-height:0;}
   .ow-score{display:flex;align-items:flex-end;gap:10px;}
   .ow-score .big{font-family:var(--font-display);font-size:42px;font-weight:600;
     line-height:.9;letter-spacing:-.02em;color:var(--warn);}
@@ -64,9 +84,8 @@ export const OWNER_CSS = `
     font-family:var(--font-mono);letter-spacing:.02em;}
   .ow-cbeeo b{color:var(--accent);font-weight:500;}
 
-  /* ---- legend / toggles (bottom-left) ---- */
-  .ow-legend{position:absolute;left:22px;bottom:118px;width:276px;padding:14px 14px 9px;z-index:20;
-    max-height:calc(100vh - 360px);overflow:auto;}
+  /* ---- legend / toggles (bottom of left column) ---- */
+  .ow-legend{padding:14px 14px 9px;display:flex;flex-direction:column;min-height:0;}
   .ow-lrow{display:flex;align-items:flex-start;gap:11px;padding:8px;margin:0 -8px;cursor:pointer;
     user-select:none;border-radius:9px;transition:background .15s;border:1px solid transparent;}
   .ow-lrow:hover{background:rgba(255,255,255,.04);}
@@ -84,9 +103,8 @@ export const OWNER_CSS = `
   .ow-lrow.on .ow-tog::after{left:16px;background:var(--accent);}
   .ow-lrow.off{opacity:.5;}
 
-  /* ---- live ledger (top-right) ---- */
-  .ow-ledger{position:absolute;top:74px;right:22px;width:262px;padding:15px 16px;z-index:20;
-    max-height:calc(100vh - 250px);overflow:auto;}
+  /* ---- live ledger (top of right column) ---- */
+  .ow-ledger{padding:15px 16px;display:flex;flex-direction:column;min-height:0;}
   .ow-live{display:flex;align-items:baseline;gap:9px;margin-bottom:4px;}
   .ow-live .now{font-family:var(--font-display);font-weight:600;font-size:30px;letter-spacing:-.02em;color:var(--accent);}
   .ow-live .u{font-family:var(--font-mono);font-size:12px;color:var(--accent);}
@@ -148,9 +166,9 @@ export const OWNER_CSS = `
   .ow-pkg.custom-chip{width:auto;display:flex;align-items:center;padding:0 16px;}
   .ow-pkg.custom-chip .pn{margin-top:0;}
 
-  /* ---- next steps / application ledger (bottom-right) ---- */
-  .ow-next{position:absolute;right:22px;bottom:22px;width:308px;padding:15px 16px;z-index:20;
-    max-height:calc(100vh - 320px);display:flex;flex-direction:column;}
+  /* ---- next steps / application ledger (bottom of right column) ---- */
+  .ow-next{padding:15px 16px;display:flex;flex-direction:column;min-height:0;}
+  .ow-next .ow-cbody{display:flex;flex-direction:column;min-height:0;overflow:hidden;}
   .ow-next-scroll{overflow:auto;margin:0 -4px;padding:0 4px;flex:1;min-height:0;}
   .ow-item{display:flex;gap:11px;padding:9px 0;border-top:1px solid var(--stroke);}
   .ow-item:first-child{border-top:none;}
@@ -174,6 +192,6 @@ export const OWNER_CSS = `
   }
   @media (max-width:1180px){
     .ow-pkgbar{display:none;}
-    .ow-next{width:280px;}
+    .ow-col-right{width:280px;}
   }
 `;

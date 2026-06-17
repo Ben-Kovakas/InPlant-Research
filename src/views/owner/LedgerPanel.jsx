@@ -9,6 +9,7 @@ import { instantOutputMw } from "../../engine/scoring.js";
 import {
   fmtMw, fmtGwh, fmtGal, fmtTons, fmtPct, fmtRange,
 } from "../../lib/format.js";
+import CollapsiblePanel from "./CollapsiblePanel.jsx";
 
 function Stat({ k, sub, v, amber }) {
   return (
@@ -29,12 +30,12 @@ export default function LedgerPanel({ totals, sunT }) {
   const livePct = peakMw > 0 ? Math.round((nowMw / peakMw) * 100) : 0;
 
   return (
-    <section className="ow-panel ow-ledger" aria-label="Live impact ledger">
-      <p className="ow-h">
-        Live ledger
-        <span className="tag">recomputes on toggle</span>
-      </p>
-
+    <CollapsiblePanel
+      className="ow-ledger"
+      ariaLabel="Live impact ledger"
+      title="Live ledger"
+      tag="recomputes on toggle"
+    >
       {/* sun-driven instant output */}
       <div className="ow-live">
         <span className="now">{nowMw.toFixed(1)}</span>
@@ -72,6 +73,6 @@ export default function LedgerPanel({ totals, sunT }) {
           />
         </>
       )}
-    </section>
+    </CollapsiblePanel>
   );
 }

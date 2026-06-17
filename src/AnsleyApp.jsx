@@ -160,6 +160,20 @@ const CSS = `
   .metric .ml{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.4;}
   .so-foot{margin-top:24px;padding:14px 0 0;border-top:1px solid var(--stroke);font-size:11px;color:var(--faint);line-height:1.55;}
 
+  /* permit pathway */
+  .badge{font-family:ui-monospace,monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+    border-radius:4px;padding:1px 6px;border:1px solid;white-space:nowrap;flex:0 0 auto;}
+  .badge.required{color:#8fd9a0;border-color:rgba(143,217,160,.45);background:rgba(143,217,160,.1);}
+  .badge.likely{color:var(--accent);border-color:rgba(244,196,122,.45);background:rgba(244,196,122,.1);}
+  .badge.conditional{color:#9aa0aa;border-color:var(--stroke-strong);background:rgba(255,255,255,.03);}
+  .item .labrow{display:flex;align-items:flex-start;gap:8px;justify-content:space-between;}
+  .item .office{font-size:10.5px;color:var(--muted);margin-top:3px;}
+  .pulllist{margin:8px 0 0;padding:0;list-style:none;}
+  .pulllist li{font-size:11px;color:var(--muted);line-height:1.4;padding:5px 0 5px 14px;position:relative;border-top:1px solid var(--stroke);}
+  .pulllist li:first-child{border-top:none;}
+  .pulllist li::before{content:"?";position:absolute;left:0;top:5px;color:var(--accent);font-family:ui-monospace,monospace;font-size:10px;}
+  .pulllist li b{color:var(--text);font-weight:500;}
+
   @media (max-width:760px){
     .brand{top:14px;left:14px;max-width:60vw;} .title{font-size:17px;} .sub{display:none;}
     .readout{top:12px;right:12px;width:160px;padding:12px;} .clock .t{font-size:22px;}
@@ -181,6 +195,9 @@ export default function AnsleyApp() {
   const incentives = data.incentives || [];
   const cc = data.cityContribution || {};
   const bt = data.buildingTotals || {};
+  const pp = data.permitPathway || {};
+  const ppApps = pp.applications || [];
+  const ppPull = pp.needsDataPull || [];
 
   const openProposal = () => { scrimRef.current?.classList.add("open"); soRef.current?.classList.add("open"); };
   const closeProposal = () => { scrimRef.current?.classList.remove("open"); soRef.current?.classList.remove("open"); };
@@ -870,8 +887,38 @@ export default function AnsleyApp() {
               </div>
             </div>
 
+            {/* 4. Permit pathway */}
+            <div className="so-sec">
+              <h4><span className="n">04</span> Permit pathway</h4>
+              <p className="cap">DCP applications this scope triggers — via {pp.portal}. Lead: {pp.leadOffice}.</p>
+              {ppApps.map((a) => (
+                <div className="item" key={a.key}>
+                  <span className="lead" />
+                  <span className="body">
+                    <span className="labrow">
+                      <span className="lab">{a.type}</span>
+                      <span className={"badge " + (a.status || "conditional")}>{a.status}</span>
+                    </span>
+                    <span className="office">{a.office}</span>
+                    <span className="note">{a.trigger}{a.note ? ` · ${a.note}` : ""}</span>
+                    <span className="ref">{a.dcpRef}</span>
+                  </span>
+                </div>
+              ))}
+              {ppPull.length > 0 && (
+                <>
+                  <p className="cap" style={{ marginTop: 16 }}>Needs a parcel data pull before filing (the zoning branch):</p>
+                  <ul className="pulllist">
+                    {ppPull.map((p, i) => (
+                      <li key={i}><b>{p.item}</b> — {p.why} <span style={{ color: "var(--faint)" }}>({p.source})</span></li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+
             <p className="so-foot">
-              Mockup figures from the project fixture (Google Solar API study, Google Earth trace, and research constants). Full written proposals are produced as separate documents — this panel is the in-product digest.
+              Mockup figures from the project fixture (Google Solar API study, Google Earth trace, and research constants). Permit pathway grounded in the DCP Permitting Services Guide (Aug 2023). Full written proposals are produced as separate documents — this panel is the in-product digest.
             </p>
           </div>
         </aside>

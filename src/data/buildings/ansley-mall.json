@@ -106,5 +106,40 @@
     "stormwater": "~2.4M gal/yr retained toward the citywide GI target",
     "beltline": "BeltLine-adjacent heat-island + green-corridor contribution",
     "plan": "aligns with Climate Resilient ATL (first Climate Resilience Action Plan, 2026)"
+  },
+
+  "permitPathway": {
+    "_meta": "Grounded in the DCP Permitting Services Guide (Aug 2023). 'status' = required | likely | conditional. Submitted via Accela ACA.",
+    "portal": "Accela ACA · aca-prod.accela.com/ATLANTA_GA",
+    "leadOffice": "Office of Buildings (OOB)",
+    "phases": ["Entitlement (conditional)", "Permitting", "Inspection → CO"],
+    "applications": [
+      { "key": "sap", "type": "Special Administrative Permit (SAP)", "office": "Zoning & Development (+ Design)", "trigger": "BeltLine Overlay (BL) + new lot canopies / increased lot coverage", "status": "likely", "confidence": "medium", "dcpRef": "Planning Application → SAP (p.24, p.72)" },
+      { "key": "solarPv", "type": "Commercial · Solar PV", "office": "Office of Buildings", "trigger": "Rooftop + carport PV ~3.2 MW (>25 kW, not Express)", "status": "required", "confidence": "high", "dcpRef": "Commercial → Solar PV (p.68)" },
+      { "key": "ldp", "type": "Commercial · Land Development (LDP)", "office": "Office of Buildings + Site Development", "trigger": "Lot site work: canopy footings, bioswales, permeable, grading", "status": "required", "confidence": "high", "note": "Impact fees assessed at LDP, paid before issuance", "dcpRef": "Commercial → Land Development (p.50, p.68)" },
+      { "key": "alteration", "type": "Commercial · Alteration / Re-roof", "office": "Office of Buildings", "trigger": "Partial green roof + full re-roof to high-SRI cool membrane", "status": "required", "confidence": "high", "note": "Green/solar area is exempt from Cool Roof Ord. 25-O-1310", "dcpRef": "Commercial → Alteration / Re-roof (p.68)" },
+      { "key": "trade", "type": "Commercial Trade · Electrical + EV", "office": "Office of Buildings", "trigger": "PV interconnection, EV chargers, low-voltage monitoring", "status": "required", "confidence": "high", "dcpRef": "Commercial Trade → General Electric / Low Voltage (p.69)" },
+      { "key": "arborist", "type": "Arborist · Tree & Landscape Plan", "office": "OOB Arborist Division", "trigger": "Lot 30+ spaces resurfaced; any tree ≥6\" DBH removed", "status": "required", "confidence": "high", "note": "~81 lot trees (1 per 8 spaces); plan by city-registered professional", "dcpRef": "Arborist Permits (p.56), Trees on Private Property (p.74)" },
+      { "key": "fire", "type": "Fire & Life Safety", "office": "Atlanta Fire Rescue + OOB", "trigger": "PV roof access / rapid-shutdown; assembly tenants >50 occ. (LA Fitness)", "status": "required", "confidence": "high", "dcpRef": "Fire & Life Safety (p.54)" },
+      { "key": "dwm", "type": "Watershed (DWM) · stormwater + meter", "office": "Dept. of Watershed Management", "trigger": "Ch. 74 first-inch GI concept; water service required before CO", "status": "required", "confidence": "medium", "dcpRef": "Now What → Water meters (p.63)" }
+    ],
+    "needsDataPull": [
+      { "item": "Zoning classification + base-use conformance", "why": "Determines whether Rezoning / ZRB / CRC are needed", "source": "gis.atlantaga.gov/propinfo" },
+      { "item": "BeltLine Overlay confirmation (½-mile)", "why": "Confirms the SAP trigger", "source": "DCP GIS overlay layer" },
+      { "item": "BZA Variance need", "why": "Canopies vs. parking-count minimums / setbacks", "source": "Zoning dimensional standards + site plan" },
+      { "item": "Historic / Landmark status", "why": "Would add Office of Design (HP) review", "source": "DCP GIS — likely none in Piedmont Heights" },
+      { "item": "NPU assignment", "why": "Public-notice routing for any SAP / variance hearing", "source": "DCP GIS" },
+      { "item": "ROW / ATLDOT permit", "why": "Only if curb cuts / BeltLine approach touch the right-of-way", "source": "atldot.atlantaga.gov" }
+    ],
+    "criticalPath": [
+      "GA Power interconnection study + rebate pre-approval (BEFORE construction)",
+      "PE structural load memo (green-roof gate)",
+      "SAP / BeltLine Overlay conformance (Zoning)",
+      "DWM stormwater concept — first-inch sizing",
+      "Arborist tree & landscape plan",
+      "Building + electrical + roofing permits (OOB)",
+      "Fire life-safety sign-off",
+      "Inspections → CO / Completion"
+    ]
   }
 }

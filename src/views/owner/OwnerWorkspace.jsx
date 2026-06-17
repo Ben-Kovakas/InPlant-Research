@@ -108,17 +108,25 @@ export default function OwnerWorkspace() {
             </div>
           </header>
 
-          {/* baseline — the trigger for action */}
-          <BaselineCard building={building} />
-
           {/* package presets A/B/C + custom */}
           <PackageBar packageId={packageId} applyPackage={applyPackage} />
 
-          {/* live ledger — the 5 key numbers, sun-driven instant output */}
-          <LedgerPanel totals={totals} sunT={sunT} />
+          {/* left column — baseline + intervention toggles, each collapsible so
+              they read independently instead of overlapping */}
+          <div className="ow-col ow-col-left">
+            {/* baseline — the trigger for action */}
+            <BaselineCard building={building} />
+            {/* intervention toggles — drive the twin + the ledger */}
+            <InterventionLegend activeKeys={activeKeys} toggleKey={toggleKey} />
+          </div>
 
-          {/* intervention toggles — drive the twin + the ledger */}
-          <InterventionLegend activeKeys={activeKeys} toggleKey={toggleKey} />
+          {/* right column — live ledger + application ledger, each collapsible */}
+          <div className="ow-col ow-col-right">
+            {/* live ledger — the 5 key numbers, sun-driven instant output */}
+            <LedgerPanel totals={totals} sunT={sunT} />
+            {/* application ledger + export CTA → dossier */}
+            <NextSteps building={building} navigate={navigate} />
+          </div>
 
           {/* sun path control */}
           <SunDock
@@ -127,9 +135,6 @@ export default function OwnerWorkspace() {
             playing={playing}
             setPlaying={setPlaying}
           />
-
-          {/* application ledger + export CTA → dossier */}
-          <NextSteps building={building} navigate={navigate} />
         </div>
       </div>
     </>

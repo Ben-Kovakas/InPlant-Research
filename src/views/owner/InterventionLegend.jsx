@@ -6,6 +6,7 @@
 
 import React from "react";
 import { INTERVENTIONS } from "../../engine/interventions.js";
+import CollapsiblePanel from "./CollapsiblePanel.jsx";
 
 // quiet swatch colors mirroring the 3D twin material palette
 const SWATCH = {
@@ -19,11 +20,12 @@ const SWATCH = {
 export default function InterventionLegend({ activeKeys, toggleKey }) {
   const onSet = new Set(activeKeys);
   return (
-    <section className="ow-panel ow-legend" aria-label="Intervention toggles">
-      <p className="ow-h">
-        Retrofit interventions
-        <span className="tag">{onSet.size}/{INTERVENTIONS.length} on</span>
-      </p>
+    <CollapsiblePanel
+      className="ow-legend"
+      ariaLabel="Intervention toggles"
+      title="Retrofit interventions"
+      tag={`${onSet.size}/${INTERVENTIONS.length} on`}
+    >
       {INTERVENTIONS.map((iv) => {
         const on = onSet.has(iv.key);
         return (
@@ -52,6 +54,6 @@ export default function InterventionLegend({ activeKeys, toggleKey }) {
           </div>
         );
       })}
-    </section>
+    </CollapsiblePanel>
   );
 }

@@ -6,6 +6,7 @@
 ---------------------------------------------------------------------------- */
 
 import React from "react";
+import CollapsiblePanel from "./CollapsiblePanel.jsx";
 
 // A code is "satisfied" by the modeled retrofit when its role is a carrot or a
 // gate the package clears; pure gates/constraints stay flagged as action items.
@@ -20,12 +21,12 @@ export default function NextSteps({ building, navigate }) {
   const incentives = building.incentives || [];
 
   return (
-    <section className="ow-panel ow-next" aria-label="Application ledger and next steps">
-      <p className="ow-h">
-        Application ledger
-        <span className="tag">path to City</span>
-      </p>
-
+    <CollapsiblePanel
+      className="ow-next"
+      ariaLabel="Application ledger and next steps"
+      title="Application ledger"
+      tag="path to City"
+    >
       <div className="ow-next-scroll">
         {codes.map((c) => {
           const st = codeState(c.role);
@@ -62,6 +63,6 @@ export default function NextSteps({ building, navigate }) {
           <path d="M9 4l4 4-4 4" />
         </svg>
       </button>
-    </section>
+    </CollapsiblePanel>
   );
 }
